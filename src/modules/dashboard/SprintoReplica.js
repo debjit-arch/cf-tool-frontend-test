@@ -38,7 +38,7 @@ const TSCS = [
 ];
 
 const COLORS = {
-  bg: "#f9fafb",
+  bg: "#000000",
   cardBg: "#ffffff",
   borderSoft: "rgba(148,163,184,0.35)",
   textMuted: "#6b7280",
