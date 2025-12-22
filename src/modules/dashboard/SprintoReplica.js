@@ -956,7 +956,7 @@ const SprintoConnectionsMobile = () => {
               SafeSphere
             </div>
             <div style={{ fontSize: 12, color: MOBILE_COLORS.textMuted }}>
-              Entities mapped to SOC 2 TSCs
+              Entities mapped to ISO_27001
             </div>
           </div>
         </div>
@@ -1133,7 +1133,7 @@ const SprintoConnectionsMobile = () => {
                   marginBottom: 2
                 }}
               >
-                Automation Engine
+                SAFESPHERE
               </div>
               <div
                 ref={statusRef}

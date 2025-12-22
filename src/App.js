@@ -285,6 +285,10 @@ import {
 } from "react-router-dom";
 
 import HamburgerMenu from "./components/navigations/HamburgerMenu";
+import ISO_27001 from "./modules/dashboard/FrameWorks/ISO_27001";
+import ISO_27701 from "./modules/dashboard/FrameWorks/ISO_27701";
+import Policies from "./modules/dashboard/Template/Policies";
+import Procedures from "./modules/dashboard/Template/Procedures";
 
 import Dashboard from "./modules/dashboard/Dashboard";
 import LoginPage from "./modules/departments/pages/loginPage";
@@ -347,7 +351,13 @@ function App() {
         {/* LOGIN ROUTE - STANDALONE LAYOUT (no hamburger menu) */}
         <Route exact path="/login" component={LoginPage} />
         <Route path="/demo" component={DemoPage} />
-
+           {/* FRAMEWORK ROUTES */}
+         <Route path="/iso-27001" component={ISO_27001} />
+        <Route path="/iso-27701" component={ISO_27701} />
+           
+                 {/* TEMPLATE ROUTES */}
+             <Route path="/policies" component={Policies} />
+        <Route path="/procedures" component={Procedures} />
 
         {/* ALL OTHER ROUTES WITH HAMBURGER + MAIN LAYOUT */}
         <Route>

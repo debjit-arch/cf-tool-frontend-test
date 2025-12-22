@@ -2498,8 +2498,8 @@
 
 
 
-
-import React, { useState, useEffect } from "react";
+// Dashboard.jsx
+import React, { useState, useEffect , useRef} from "react";
 import { useHistory } from "react-router-dom";
 import "./Dashboard.css";
 import {
@@ -2521,7 +2521,12 @@ import {
   X,
 } from "lucide-react";
 import ChangePasswordModal from "./ChangePasswordModal";
-import SprintoReplica from './SprintoReplica'
+import ISO_27001 from "./FrameWorks/ISO_27001";
+import ISO_27701 from "./FrameWorks/ISO_27701";
+import Procedures from "./Template/Procedures";
+import Policies from "./Template/Policies";
+import SprintoReplica from "./SprintoReplica";
+
 const Hero3DEarth = ({ isLoggedIn, user }) => {
   const history = useHistory();
   const [mounted, setMounted] = useState(false);
@@ -2686,7 +2691,7 @@ const RotatingFeatures = () => {
 
   const anglePerItem = 360 / features.length;
   const radius = 230;
-  const center = 270; // 540 / 2
+  const center = 270;
 
   const handleCenterClick = () => {
     setActiveIndex(null);
@@ -2694,7 +2699,7 @@ const RotatingFeatures = () => {
 
   return (
     <section className="rot-pro-section flex justify-center">
-   <SprintoReplica/>
+      <SprintoReplica />
     </section>
   );
 };
@@ -2951,6 +2956,73 @@ const faqs = [
   },
 ];
 
+// NEW small reusable dropdown button component
+// replace your HeaderDropdown with this version
+const HeaderDropdown = ({ label, options }) => {
+  const history = useHistory();
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const handleNavigate = (route) => {
+    setOpen(false);
+    history.push(route);
+  };
+
+  // Close when clicking anywhere outside the dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
+
+  return (
+    <div
+      className="header-dropdown"
+      ref={dropdownRef}
+    >
+      <button
+        className="header-dropdown-trigger"
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <span>{label}</span>
+        <ChevronDown
+          size={16}
+          className={`header-dropdown-icon ${open ? "open" : ""}`}
+        />
+      </button>
+      {open && (
+        <div className="header-dropdown-menu">
+          {options.map((opt) => (
+            <button
+              key={opt.label}
+              className="header-dropdown-item"
+              onClick={() => handleNavigate(opt.route)}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+
 const Dashboard = () => {
   const history = useHistory();
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -2993,27 +3065,49 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-            <div className="dashboard-user-card">
-              <UserCircle2 className="text-indigo-600 w-5 h-5" />
-              <div className="dashboard-user-info">
-                <span className="dashboard-user-name">
-                  {user.name || "User"}
-                </span>
-                <span className="dashboard-user-role">
-                  {user.department?.name || "Consultant"}
-                </span>
+
+            {/* NEW header right side with dropdowns + user card */}
+            <div className="dashboard-header-right">
+              {/* Frameworks dropdown */}
+              <HeaderDropdown
+                label="Frameworks"
+                options={[
+                  { label: "ISO 27001", route: {ISO_27001} },
+                  { label: "NIST CSF", route: "/nist-csf" },
+                ]}
+              />
+
+              {/* Templates dropdown */}
+              <HeaderDropdown
+                label="Templates"
+                options={[
+                  { label: "Policy Templates", route: "/policy-templates" },
+                  { label: "Risk Templates", route: "/risk-templates" },
+                ]}
+              />
+
+              <div className="dashboard-user-card">
+                <UserCircle2 className="text-indigo-600 w-5 h-5" />
+                <div className="dashboard-user-info">
+                  <span className="dashboard-user-name">
+                    {user.name || "User"}
+                  </span>
+                  <span className="dashboard-user-role">
+                    {user.department?.name || "Consultant"}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowChangePassword(true)}
+                  className="dashboard-change-pwd-btn"
+                >
+                  <Lock className="w-4 h-4" /> Change
+                </button>
+                {showChangePassword && (
+                  <ChangePasswordModal
+                    onClose={() => setShowChangePassword(false)}
+                  />
+                )}
               </div>
-              <button
-                onClick={() => setShowChangePassword(true)}
-                className="dashboard-change-pwd-btn"
-              >
-                <Lock className="w-4 h-4" /> Change
-              </button>
-              {showChangePassword && (
-                <ChangePasswordModal
-                  onClose={() => setShowChangePassword(false)}
-                />
-              )}
             </div>
           </div>
         </header>
@@ -3066,8 +3160,6 @@ const Dashboard = () => {
               )}
             </div>
           </section>
-
-         
 
           <section className="dashboard-features-section">
             <div className="dashboard-features-header">
@@ -3232,9 +3324,7 @@ const Dashboard = () => {
                   <button
                     className="dashboard-faq-question"
                     onClick={() =>
-                      setExpandedFaq(
-                        expandedFaq === idx ? null : idx
-                      )
+                      setExpandedFaq(expandedFaq === idx ? null : idx)
                     }
                   >
                     <span>{faq.question}</span>
@@ -3371,12 +3461,32 @@ const Dashboard = () => {
               </p>
             </div>
           </div>
-          <button
-            className="dashboard-login-btn"
-            onClick={() => history.push("/login")}
-          >
-            <LogIn className="w-4 h-4" /> Login
-          </button>
+
+          {/* For guests, show dropdowns + login button */}
+          <div className="dashboard-header-right">
+            <HeaderDropdown
+  label="Frameworks"
+  options={[
+    { label: "ISO 27001", route: "/iso-27001" },
+    { label: "ISO 27701", route: "/iso-27701" },
+  ]}
+/>
+
+           <HeaderDropdown
+  label="Templates"
+  options={[
+    { label: "Policies", route: "/policies" },
+    { label: "Procedures", route: "/procedures" },
+  ]}
+/>
+
+            <button
+              className="dashboard-login-btn"
+              onClick={() => history.push("/login")}
+            >
+              <LogIn className="w-4 h-4" /> Login
+            </button>
+          </div>
         </div>
       </header>
 
@@ -3414,7 +3524,6 @@ const Dashboard = () => {
             )}
           </div>
         </section>
-
 
         <section className="dashboard-guest-features">
           <div className="dashboard-features-header">
