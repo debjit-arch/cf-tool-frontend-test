@@ -213,6 +213,7 @@ const DemoPage = () => {
       await new Promise((resolve) => setTimeout(resolve, 800));
       alert("Thanks! Our team will contact you shortly.");
       history.push("/login");
+      console.log(form)
     } catch (err) {
       setError("Something went wrong. Please try again.");
     } finally {
