@@ -37,7 +37,7 @@ const HamburgerMenu = () => {
             position: "fixed",
             top: 20,
             left: 5,
-            zIndex: 1001,
+            zIndex: 9999,
             width: 50,
             height: 50,
             backgroundColor: "#007bff",
