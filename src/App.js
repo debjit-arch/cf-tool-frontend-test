@@ -4,6 +4,7 @@ import {
   Route,
   Switch,
   Redirect,
+  useLocation,
 } from "react-router-dom";
 
 import HamburgerMenu from "./components/navigations/HamburgerMenu";
@@ -65,6 +66,18 @@ const RoleBasedRoute = ({ component: Component, allowedRoles, ...rest }) => {
     />
   );
 };
+const AppLayout = ({ children }) => {
+  const location = useLocation();
+
+  const isDashboard = location.pathname === "/";
+
+  return (
+    <div className="app">
+      {!isDashboard && <HamburgerMenu />}
+      <main className="main-content">{children}</main>
+    </div>
+  );
+};
 
 function App() {
   return (
@@ -73,114 +86,105 @@ function App() {
         {/* LOGIN ROUTE - STANDALONE LAYOUT (no hamburger menu) */}
         <Route exact path="/login" component={LoginPage} />
         <Route path="/demo" component={DemoPage} />
-           {/* FRAMEWORK ROUTES */}
-         <Route path="/iso-27001" component={ISO_27001} />
+        {/* FRAMEWORK ROUTES */}
+        <Route path="/iso-27001" component={ISO_27001} />
         <Route path="/iso-27701" component={ISO_27701} />
-           
-                 {/* TEMPLATE ROUTES */}
-             <Route path="/policies" component={Policies} />
+
+        {/* TEMPLATE ROUTES */}
+        <Route path="/policies" component={Policies} />
         <Route path="/procedures" component={Procedures} />
 
         {/* ALL OTHER ROUTES WITH HAMBURGER + MAIN LAYOUT */}
         <Route>
-          <div className="app">
-            <HamburgerMenu />
-            <main className="main-content">
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route
-                  exact
-                  path="/change-password"
-                  component={ChangePasswordPage}
-                />
+          <AppLayout>
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route
+                exact
+                path="/change-password"
+                component={ChangePasswordPage}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/risk-assessment"
-                  component={RiskAssessment}
-                />
-                <ProtectedRoute
-                  path="/risk-assessment/add"
-                  component={AddRisk}
-                />
-                <RoleBasedRoute
-                  path="/risk-assessment/saved"
-                  component={SavedRisksPage}
-                  allowedRoles={[
-                    "risk_owner",
-                    "risk_identifier",
-                    "risk_manager",
-                    "super_admin",
-                    "root",
-                  ]}
-                />
-                <RoleBasedRoute
-                  path="/risk-assessment/soa"
-                  component={SoaPage}
-                  allowedRoles={[
-                    "risk_owner",
-                    "risk_identifier",
-                    "risk_manager",
-                    "super_admin",
-                    "root",
-                  ]}
-                />
+              <ProtectedRoute
+                exact
+                path="/risk-assessment"
+                component={RiskAssessment}
+              />
+              <ProtectedRoute path="/risk-assessment/add" component={AddRisk} />
+              <RoleBasedRoute
+                path="/risk-assessment/saved"
+                component={SavedRisksPage}
+                allowedRoles={[
+                  "risk_owner",
+                  "risk_identifier",
+                  "risk_manager",
+                  "super_admin",
+                  "root",
+                ]}
+              />
+              <RoleBasedRoute
+                path="/risk-assessment/soa"
+                component={SoaPage}
+                allowedRoles={[
+                  "risk_owner",
+                  "risk_identifier",
+                  "risk_manager",
+                  "super_admin",
+                  "root",
+                ]}
+              />
 
-                <ProtectedRoute
-                  path="/risk-assessment/templates"
-                  component={TemplatesPage}
-                />
-                <ProtectedRoute
-                  path="/risk-assessment/my-tasks"
-                  component={MyTasks}
-                />
-                <ProtectedRoute
-                  path="/risk-assessment/mld"
-                  component={SoAMLD}
-                />
+              <ProtectedRoute
+                path="/risk-assessment/templates"
+                component={TemplatesPage}
+              />
+              <ProtectedRoute
+                path="/risk-assessment/my-tasks"
+                component={MyTasks}
+              />
+              <ProtectedRoute path="/risk-assessment/mld" component={SoAMLD} />
 
-                <ProtectedRoute
-                  exact
-                  path="/documentation"
-                  component={Documentation}
-                />
-                <ProtectedRoute
-                  path="/risk-assessment/controls"
-                  component={ControlsPage}
-                />
-                <ProtectedRoute
-                  path="/documentation/reports"
-                  component={ReportsPage}
-                />
-                <ProtectedRoute
-                  path="/documentation/settings"
-                  component={DocumentationSettingsPage}
-                />
-                <ProtectedRoute path="/documentation/mld" component={MLD} />
+              <ProtectedRoute
+                exact
+                path="/documentation"
+                component={Documentation}
+              />
+              <ProtectedRoute
+                path="/risk-assessment/controls"
+                component={ControlsPage}
+              />
+              <ProtectedRoute
+                path="/documentation/reports"
+                component={ReportsPage}
+              />
+              <ProtectedRoute
+                path="/documentation/settings"
+                component={DocumentationSettingsPage}
+              />
+              <ProtectedRoute path="/documentation/mld" component={MLD} />
 
-                <ProtectedRoute
-                  exact
-                  path="/gap-assessment"
-                  component={GapAssessmentDashboard}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/gap-assessment/new"
-                  component={NewAssessment}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/gap-assessment/history"
-                  component={AssessmentHistory}
-                />
+              <ProtectedRoute
+                exact
+                path="/gap-assessment"
+                component={GapAssessmentDashboard}
+              />
+              <ProtectedRoute
+                exact
+                path="/gap-assessment/new"
+                component={NewAssessment}
+              />
+              <ProtectedRoute
+                exact
+                path="/gap-assessment/history"
+                component={AssessmentHistory}
+              />
 
-                {/* Catch all - redirect to home */}
-                <Route path="*">
-                  <Redirect to="/" />
-                </Route>
-              </Switch>
-            </main>
-          </div>
+              {/* Catch all - redirect to home */}
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
+          </AppLayout>
         </Route>
       </Switch>
     </Router>
@@ -188,4 +192,3 @@ function App() {
 }
 
 export default App;
-

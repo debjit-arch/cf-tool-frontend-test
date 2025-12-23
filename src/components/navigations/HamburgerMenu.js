@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Home, FolderKanban, FileText, TrendingUp, LogOut } from "lucide-react";
-
+import { Menu } from "lucide-react";
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
@@ -36,7 +36,7 @@ const HamburgerMenu = () => {
           style={{
             position: "fixed",
             top: 20,
-            left: 5,
+            left: 20,
             zIndex: 9999,
             width: 50,
             height: 50,
@@ -57,33 +57,7 @@ const HamburgerMenu = () => {
           onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
           onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
-          <span
-            style={{
-              width: 25,
-              height: 3,
-              backgroundColor: "white",
-              borderRadius: 1.5,
-              transition: "all 0.3s ease",
-            }}
-          />
-          <span
-            style={{
-              width: 25,
-              height: 3,
-              backgroundColor: "white",
-              borderRadius: 1.5,
-              transition: "all 0.3s ease",
-            }}
-          />
-          <span
-            style={{
-              width: 25,
-              height: 3,
-              backgroundColor: "white",
-              borderRadius: 1.5,
-              transition: "all 0.3s ease",
-            }}
-          />
+          <Menu />
         </button>
       )}
 

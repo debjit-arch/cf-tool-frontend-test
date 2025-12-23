@@ -27,6 +27,8 @@ const NewAssessment = () => {
     }
   }, []);
 
+  const isAuditor = userRole;
+
   // Build rows from constants filtered by department
   useEffect(() => {
     if (!user) return;
@@ -324,342 +326,343 @@ const NewAssessment = () => {
     return acc;
   }, {});
 
-return (
-  <div className="px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 max-w-7xl mx-auto">
-    {/* Header */}
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 sm:mb-6">
-      <div className="flex items-center gap-2 sm:gap-3">
-        <ShieldCheck className="text-blue-600" size={24} />
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
-          New Assessment
-        </h2>
-      </div>
-      <div className="bg-blue-50 px-3 py-2 rounded-lg text-xs sm:text-sm text-gray-700">
-        <div>
-          Logged in as:{" "}
-          <span className="font-semibold">
-            {user?.name || "Unknown"}
-          </span>
+  return (
+    <div className="px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 sm:mb-6">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ShieldCheck className="text-blue-600" size={24} />
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+            New Assessment
+          </h2>
         </div>
-        <div>
-          Role:{" "}
-          <span className="font-semibold capitalize">
-            {userRole ? "Auditor" : "Assessor"}
-          </span>{" "}
-          | Dept:{" "}
-          <span className="font-semibold">
-            {user?.department?.name || "N/A"}
-          </span>
+        <div className="bg-blue-50 px-3 py-2 rounded-lg text-xs sm:text-sm text-gray-700">
+          <div>
+            Logged in as:{" "}
+            <span className="font-semibold">{user?.name || "Unknown"}</span>
+          </div>
+          <div>
+            Role:{" "}
+            <span className="font-semibold capitalize">
+              {userRole ? "Evaluator" : "Assessor"}
+            </span>{" "}
+            | Dept:{" "}
+            <span className="font-semibold">
+              {user?.department?.name || "N/A"}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
 
-    {/* Table container */}
-    <div className="rounded-xl shadow border border-gray-200 bg-white">
-      {Object.keys(grouped).map((clause, i) => (
-        <div key={i} className="mb-4 last:mb-0">
-          {/* Scroll container for header + table together */}
-          <div className="overflow-x-auto">
-            {/* Inner block shares same min-width as table */}
-            <div className="min-w-[720px]">
-              {/* Clause header spanning full table width */}
-              <div className="bg-blue-100 px-3 sm:px-4 py-2 border-b border-gray-200">
-                <h3 className="font-semibold text-gray-800 text-sm sm:text-base">
-                  {clause}
-                </h3>
-                <span className="block text-xs sm:text-sm text-gray-600">
-                  {grouped[clause][0].standardRequirement}
-                </span>
-              </div>
+      {/* Table container */}
+      <div className="rounded-xl shadow border border-gray-200 bg-white">
+        {Object.keys(grouped).map((clause, i) => (
+          <div key={i} className="mb-4 last:mb-0">
+            {/* Scroll container for header + table together */}
+            <div className="overflow-x-auto">
+              {/* Inner block shares same min-width as table */}
+              <div className={isAuditor ? "min-w-[720px]" : "w-full"}>
+                {/* Clause header spanning full table width */}
+                <div className="bg-blue-100 px-3 sm:px-4 py-2 border-b border-gray-200">
+                  <h3 className="font-semibold text-gray-800 text-sm sm:text-base">
+                    {clause}
+                  </h3>
+                  <span className="block text-xs sm:text-sm text-gray-600">
+                    {grouped[clause][0].standardRequirement}
+                  </span>
+                </div>
 
-              {/* Scrollable table */}
-              <table className="min-w-[720px] text-xs sm:text-sm border-collapse">
-                <thead className="bg-gray-50 sticky top-0 z-10">
-                  <tr>
-                    <th className="border px-2 sm:px-3 py-2 text-left">
-                      Question
-                    </th>
-                    <th className="border px-2 sm:px-3 py-2">
-                      Document Evidence
-                    </th>
-                    <th className="border px-2 sm:px-3 py-2">
-                      Practice Evidence
-                    </th>
-                    {userRole && (
-                      <>
-                        <th className="border px-2 sm:px-3 py-2">
-                          Doc Score
-                        </th>
-                        <th className="border px-2 sm:px-3 py-2">
-                          Practice Score
-                        </th>
-                        <th className="border px-2 sm:px-3 py-2">
-                          Total Score
-                        </th>
-                        <th className="border px-2 sm:px-3 py-2">
-                          Doc Remarks
-                        </th>
-                        <th className="border px-2 sm:px-3 py-2">
-                          Practice Remarks
-                        </th>
-                      </>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {grouped[clause].map((row) => (
-                    <tr
-                      key={row.idx}
-                      className="hover:bg-blue-50 transition-colors"
-                    >
-                      <td className="border px-2 sm:px-3 py-2 align-top font-medium">
-                        {row.question}
-                      </td>
-
-                      {/* Document Evidence */}
-                      <td className="border px-2 sm:px-3 py-2 align-top">
-                        {!userRole && (
-                          <label className="cursor-pointer text-blue-600 hover:underline text-[11px] sm:text-xs">
-                            <Upload size={14} className="inline mr-1" />
-                            Upload
-                            <input
-                              type="file"
-                              className="hidden"
-                              onChange={(e) =>
-                                handleFileChange(
-                                  row.idx,
-                                  e.target.files[0],
-                                  "documentEvidence"
-                                )
-                              }
-                            />
-                          </label>
-                        )}
-                        {row.documentEvidence && (
-                          <div className="mt-1 space-x-1">
-                            <button
-                              onClick={() =>
-                                setSelectedDoc(row.documentEvidence)
-                              }
-                              className="text-[11px] sm:text-xs text-blue-600 hover:underline"
-                            >
-                              <Eye size={14} className="inline mr-1" />
-                              View
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleDeleteFile(row.idx, "documentEvidence")
-                              }
-                              className="text-[11px] sm:text-xs text-red-500 hover:underline"
-                            >
-                              <Trash size={14} className="inline mr-1" />
-                              Delete
-                            </button>
-                          </div>
-                        )}
-                        <textarea
-                          className="w-full border rounded mt-2 px-1 py-0.5 text-[11px] sm:text-xs"
-                          rows={2}
-                          value={row.documentNotes || ""}
-                          placeholder="Document notes..."
-                          onChange={(e) =>
-                            handleInputChange(
-                              row.idx,
-                              "documentNotes",
-                              e.target.value
-                            )
-                          }
-                          onBlur={() => handleNotesBlur(row.idx)}
-                        />
-                      </td>
-
-                      {/* Practice Evidence */}
-                      <td className="border px-2 sm:px-3 py-2 align-top">
-                        {!userRole && (
-                          <label className="cursor-pointer text-green-600 hover:underline text-[11px] sm:text-xs">
-                            <Upload size={14} className="inline mr-1" />
-                            Upload
-                            <input
-                              type="file"
-                              className="hidden"
-                              onChange={(e) =>
-                                handleFileChange(
-                                  row.idx,
-                                  e.target.files[0],
-                                  "practiceEvidence"
-                                )
-                              }
-                            />
-                          </label>
-                        )}
-                        {row.practiceEvidence && (
-                          <div className="mt-1 space-x-1">
-                            <button
-                              onClick={() =>
-                                setSelectedDoc(row.practiceEvidence)
-                              }
-                              className="text-[11px] sm:text-xs text-green-600 hover:underline"
-                            >
-                              <Eye size={14} className="inline mr-1" />
-                              View
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleDeleteFile(row.idx, "practiceEvidence")
-                              }
-                              className="text-[11px] sm:text-xs text-red-500 hover:underline"
-                            >
-                              <Trash size={14} className="inline mr-1" />
-                              Delete
-                            </button>
-                          </div>
-                        )}
-                        <textarea
-                          className="w-full border rounded mt-2 px-1 py-0.5 text-[11px] sm:text-xs"
-                          rows={2}
-                          value={row.practiceNotes || ""}
-                          placeholder="Practice notes..."
-                          onChange={(e) =>
-                            handleInputChange(
-                              row.idx,
-                              "practiceNotes",
-                              e.target.value
-                            )
-                          }
-                          onBlur={() => handleNotesBlur(row.idx)}
-                        />
-                      </td>
-
-                      {/* Scores and remarks (auditor) */}
+                {/* Scrollable table */}
+                <table
+                  className={`${
+                    isAuditor ? "min-w-[720px]" : "w-full"
+                  } text-xs sm:text-sm border-collapse`}
+                >
+                  <thead className="bg-gray-50 sticky top-0 z-10">
+                    <tr>
+                      <th className="border px-2 sm:px-3 py-2 text-left">
+                        Question
+                      </th>
+                      <th className="border px-2 sm:px-3 py-2">
+                        Document Evidence
+                      </th>
+                      <th className="border px-2 sm:px-3 py-2">
+                        Practice Evidence
+                      </th>
                       {userRole && (
                         <>
-                          <td className="border px-2 sm:px-3 py-2 align-top">
-                            <select
-                              value={row.docScore}
-                              onChange={(e) =>
-                                handleAuditorChange(
-                                  row.idx,
-                                  "docScore",
-                                  e.target.value
-                                )
-                              }
-                              className="w-full border rounded text-[11px] sm:text-xs"
-                            >
-                              <option value="">Doc Score</option>
-                              <option value="0">0 - Non Compliant</option>
-                              <option value="1">1 - Partial</option>
-                              <option value="2">2 - Compliant</option>
-                            </select>
-                          </td>
-
-                          <td className="border px-2 sm:px-3 py-2 align-top">
-                            <select
-                              value={row.practiceScore}
-                              onChange={(e) =>
-                                handleAuditorChange(
-                                  row.idx,
-                                  "practiceScore",
-                                  e.target.value
-                                )
-                              }
-                              className="w-full border rounded text-[11px] sm:text-xs"
-                            >
-                              <option value="">Practice Score</option>
-                              <option value="0">0 - Non Compliant</option>
-                              <option value="1">1 - Partial</option>
-                              <option value="2">2 - Compliant</option>
-                            </select>
-                          </td>
-
-                          <td className="border px-2 sm:px-3 py-2 align-middle text-center font-semibold text-xs">
-                            {row.totalScore}
-                          </td>
-
-                          <td className="border px-2 sm:px-3 py-2 align-top">
-                            <textarea
-                              value={row.docRemarks}
-                              onChange={(e) =>
-                                handleAuditorChange(
-                                  row.idx,
-                                  "docRemarks",
-                                  e.target.value
-                                )
-                              }
-                              className="w-full border rounded text-[11px] sm:text-xs"
-                              rows={2}
-                              placeholder="Doc remarks..."
-                            />
-                          </td>
-
-                          <td className="border px-2 sm:px-3 py-2 align-top">
-                            <textarea
-                              value={row.practiceRemarks}
-                              onChange={(e) =>
-                                handleAuditorChange(
-                                  row.idx,
-                                  "practiceRemarks",
-                                  e.target.value
-                                )
-                              }
-                              className="w-full border rounded text-[11px] sm:text-xs"
-                              rows={2}
-                              placeholder="Practice remarks..."
-                            />
-                          </td>
+                          <th className="border px-2 sm:px-3 py-2">
+                            Doc Score
+                          </th>
+                          <th className="border px-2 sm:px-3 py-2">
+                            Practice Score
+                          </th>
+                          <th className="border px-2 sm:px-3 py-2">
+                            Total Score
+                          </th>
+                          <th className="border px-2 sm:px-3 py-2">
+                            Doc Remarks
+                          </th>
+                          <th className="border px-2 sm:px-3 py-2">
+                            Practice Remarks
+                          </th>
                         </>
                       )}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {grouped[clause].map((row) => (
+                      <tr
+                        key={row.idx}
+                        className="hover:bg-blue-50 transition-colors"
+                      >
+                        <td className="border px-2 sm:px-3 py-2 align-top font-medium">
+                          {row.question}
+                        </td>
+
+                        {/* Document Evidence */}
+                        <td className="border px-2 sm:px-3 py-2 align-top">
+                          {!userRole && (
+                            <label className="cursor-pointer text-blue-600 hover:underline text-[11px] sm:text-xs">
+                              <Upload size={14} className="inline mr-1" />
+                              Upload
+                              <input
+                                type="file"
+                                className="hidden"
+                                onChange={(e) =>
+                                  handleFileChange(
+                                    row.idx,
+                                    e.target.files[0],
+                                    "documentEvidence"
+                                  )
+                                }
+                              />
+                            </label>
+                          )}
+                          {row.documentEvidence && (
+                            <div className="mt-1 space-x-1">
+                              <button
+                                onClick={() =>
+                                  setSelectedDoc(row.documentEvidence)
+                                }
+                                className="text-[11px] sm:text-xs text-blue-600 hover:underline"
+                              >
+                                <Eye size={14} className="inline mr-1" />
+                                View
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleDeleteFile(row.idx, "documentEvidence")
+                                }
+                                className="text-[11px] sm:text-xs text-red-500 hover:underline"
+                              >
+                                <Trash size={14} className="inline mr-1" />
+                                Delete
+                              </button>
+                            </div>
+                          )}
+                          <textarea
+                            className="w-full border rounded mt-2 px-1 py-0.5 text-[11px] sm:text-xs"
+                            rows={2}
+                            value={row.documentNotes || ""}
+                            placeholder="Document notes..."
+                            onChange={(e) =>
+                              handleInputChange(
+                                row.idx,
+                                "documentNotes",
+                                e.target.value
+                              )
+                            }
+                            onBlur={() => handleNotesBlur(row.idx)}
+                          />
+                        </td>
+
+                        {/* Practice Evidence */}
+                        <td className="border px-2 sm:px-3 py-2 align-top">
+                          {!userRole && (
+                            <label className="cursor-pointer text-green-600 hover:underline text-[11px] sm:text-xs">
+                              <Upload size={14} className="inline mr-1" />
+                              Upload
+                              <input
+                                type="file"
+                                className="hidden"
+                                onChange={(e) =>
+                                  handleFileChange(
+                                    row.idx,
+                                    e.target.files[0],
+                                    "practiceEvidence"
+                                  )
+                                }
+                              />
+                            </label>
+                          )}
+                          {row.practiceEvidence && (
+                            <div className="mt-1 space-x-1">
+                              <button
+                                onClick={() =>
+                                  setSelectedDoc(row.practiceEvidence)
+                                }
+                                className="text-[11px] sm:text-xs text-green-600 hover:underline"
+                              >
+                                <Eye size={14} className="inline mr-1" />
+                                View
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleDeleteFile(row.idx, "practiceEvidence")
+                                }
+                                className="text-[11px] sm:text-xs text-red-500 hover:underline"
+                              >
+                                <Trash size={14} className="inline mr-1" />
+                                Delete
+                              </button>
+                            </div>
+                          )}
+                          <textarea
+                            className="w-full border rounded mt-2 px-1 py-0.5 text-[11px] sm:text-xs"
+                            rows={2}
+                            value={row.practiceNotes || ""}
+                            placeholder="Practice notes..."
+                            onChange={(e) =>
+                              handleInputChange(
+                                row.idx,
+                                "practiceNotes",
+                                e.target.value
+                              )
+                            }
+                            onBlur={() => handleNotesBlur(row.idx)}
+                          />
+                        </td>
+
+                        {/* Scores and remarks (auditor) */}
+                        {userRole && (
+                          <>
+                            <td className="border px-2 sm:px-3 py-2 align-top">
+                              <select
+                                value={row.docScore}
+                                onChange={(e) =>
+                                  handleAuditorChange(
+                                    row.idx,
+                                    "docScore",
+                                    e.target.value
+                                  )
+                                }
+                                className="w-full border rounded text-[11px] sm:text-xs"
+                              >
+                                <option value="">Doc Score</option>
+                                <option value="0">0 - Non Compliant</option>
+                                <option value="1">1 - Partial</option>
+                                <option value="2">2 - Compliant</option>
+                              </select>
+                            </td>
+
+                            <td className="border px-2 sm:px-3 py-2 align-top">
+                              <select
+                                value={row.practiceScore}
+                                onChange={(e) =>
+                                  handleAuditorChange(
+                                    row.idx,
+                                    "practiceScore",
+                                    e.target.value
+                                  )
+                                }
+                                className="w-full border rounded text-[11px] sm:text-xs"
+                              >
+                                <option value="">Practice Score</option>
+                                <option value="0">0 - Non Compliant</option>
+                                <option value="1">1 - Partial</option>
+                                <option value="2">2 - Compliant</option>
+                              </select>
+                            </td>
+
+                            <td className="border px-2 sm:px-3 py-2 align-middle text-center font-semibold text-xs">
+                              {row.totalScore}
+                            </td>
+
+                            <td className="border px-2 sm:px-3 py-2 align-top">
+                              <textarea
+                                value={row.docRemarks}
+                                onChange={(e) =>
+                                  handleAuditorChange(
+                                    row.idx,
+                                    "docRemarks",
+                                    e.target.value
+                                  )
+                                }
+                                className="w-full border rounded text-[11px] sm:text-xs"
+                                rows={2}
+                                placeholder="Doc remarks..."
+                              />
+                            </td>
+
+                            <td className="border px-2 sm:px-3 py-2 align-top">
+                              <textarea
+                                value={row.practiceRemarks}
+                                onChange={(e) =>
+                                  handleAuditorChange(
+                                    row.idx,
+                                    "practiceRemarks",
+                                    e.target.value
+                                  )
+                                }
+                                className="w-full border rounded text-[11px] sm:text-xs"
+                                rows={2}
+                                placeholder="Practice remarks..."
+                              />
+                            </td>
+                          </>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Clause Score (can stay full-width, outside scroll) */}
+            <div className="text-right pr-3 sm:pr-4 py-2 text-xs sm:text-sm font-semibold text-gray-700">
+              Section Score: {clauseScores[clause]} %
             </div>
           </div>
-
-          {/* Clause Score (can stay full-width, outside scroll) */}
-          <div className="text-right pr-3 sm:pr-4 py-2 text-xs sm:text-sm font-semibold text-gray-700">
-            Section Score: {clauseScores[clause]} %
-          </div>
-        </div>
-      ))}
-    </div>
-
-    {/* Document Modal */}
-    {selectedDoc && (
-      <div
-        className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 px-2"
-        onClick={() => setSelectedDoc(null)}
-      >
-        <div
-          className="bg-white rounded-lg p-3 sm:p-4 w-full max-w-lg md:max-w-2xl relative shadow-lg"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex justify-between items-center mb-3 border-b pb-2">
-            <h3 className="font-semibold text-base sm:text-lg text-gray-800 flex items-center gap-2">
-              <ClipboardCheck className="text-blue-600" size={18} />
-              Uploaded Document
-            </h3>
-            <button
-              onClick={() => setSelectedDoc(null)}
-              className="text-red-500 hover:text-red-700"
-            >
-              <X size={20} />
-            </button>
-          </div>
-          <iframe
-            src={
-              selectedDoc.startsWith("http")
-                ? selectedDoc
-                : `https://safesphere.duckdns.org/gap-service${selectedDoc}`
-            }
-            className="w-full h-72 sm:h-96 border rounded-md"
-            title="Document Preview"
-          />
-        </div>
+        ))}
       </div>
-    )}
-  </div>
-);
 
+      {/* Document Modal */}
+      {selectedDoc && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 px-2"
+          onClick={() => setSelectedDoc(null)}
+        >
+          <div
+            className="bg-white rounded-lg p-3 sm:p-4 w-full max-w-lg md:max-w-2xl relative shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-3 border-b pb-2">
+              <h3 className="font-semibold text-base sm:text-lg text-gray-800 flex items-center gap-2">
+                <ClipboardCheck className="text-blue-600" size={18} />
+                Uploaded Document
+              </h3>
+              <button
+                onClick={() => setSelectedDoc(null)}
+                className="text-red-500 hover:text-red-700"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <iframe
+              src={
+                selectedDoc.startsWith("http")
+                  ? selectedDoc
+                  : `https://safesphere.duckdns.org/gap-service${selectedDoc}`
+              }
+              className="w-full h-72 sm:h-96 border rounded-md"
+              title="Document Preview"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default NewAssessment;
