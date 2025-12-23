@@ -171,10 +171,6 @@
 
 // export default DemoPage;
 
-
-
-
-
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./DemoPage.css";
@@ -209,13 +205,38 @@ const DemoPage = () => {
     }
 
     setSubmitting(true);
+    setError("");
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const username = "username";
+      const password = "password";
+      const basicAuth = btoa(`${username}:${password}`);
+      const response = await fetch(
+        "https://safesphere.duckdns.org/email-service/send-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Basic ${basicAuth}`,
+          },
+          body: JSON.stringify({
+            receiver: form.email,
+            subject: "Thank You for choosing SafeSphere",
+            body: `Hi ${form.organization},\n\nThank You for choosing SafeSphere an individual from sales team will contact you please send an email to info@safesphere.com attaching your work contact number`,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Email service failed");
+      }
+
       alert("Thanks! Our team will contact you shortly.");
       history.push("/login");
-      console.log(form)
+      console.log("Email sent with data:", form);
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      console.error(err);
+      setError("Failed to send email. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -229,7 +250,10 @@ const DemoPage = () => {
           <button onClick={() => history.push("/")} className="demo-nav-link">
             Home
           </button>
-          <button onClick={() => history.push("/login")} className="demo-nav-link-demo">
+          <button
+            onClick={() => history.push("/login")}
+            className="demo-nav-link-demo"
+          >
             Login
           </button>
         </nav>
@@ -240,22 +264,30 @@ const DemoPage = () => {
           <div className="demo-left-inner">
             <div className="demo-badge">#1 Risk Management Platform</div>
             <div className="demo-pulse-icon" />
-            
+
             <h1 className="demo-title">
               Schedule
-              <br />
-              a Live Demo
+              <br />a Live Demo
             </h1>
             <p className="demo-subtitle">
-              See how SafeSphere unifies risk, documentation, and compliance into a single 3D command center for your security team.
+              See how SafeSphere unifies risk, documentation, and compliance
+              into a single 3D command center for your security team.
             </p>
 
             <div className="demo-highlights">
-              <span>• <strong>Guided walkthrough</strong> of your use case</span>
-              <span>• <strong>Real-time dashboards</strong> & risk scoring</span>
-              <span>• <strong>ISO 27001, SOC 2,</strong> NIST mapping</span>
-              
-              <span>• <strong>Custom demo</strong> tailored to your needs</span>
+              <span>
+                • <strong>Guided walkthrough</strong> of your use case
+              </span>
+              <span>
+                • <strong>Real-time dashboards</strong> & risk scoring
+              </span>
+              <span>
+                • <strong>ISO 27001, SOC 2,</strong> NIST mapping
+              </span>
+
+              <span>
+                • <strong>Custom demo</strong> tailored to your needs
+              </span>
             </div>
 
             <div className="demo-orbit demo-orbit-main">
@@ -285,7 +317,8 @@ const DemoPage = () => {
             <div className="demo-form-header">
               <h2 className="demo-form-title">Tell us about your team</h2>
               <p className="demo-form-subtitle">
-                Share a few details and we will match you with a product expert. Takes 30 seconds.
+                Share a few details and we will match you with a product expert.
+                Takes 30 seconds.
               </p>
             </div>
 
@@ -351,8 +384,9 @@ const DemoPage = () => {
               </button>
 
               <p className="demo-legal">
-                SafeSphere is built for security, risk and compliance teams.
-                By submitting this form you agree to be contacted about our product and services.
+                SafeSphere is built for security, risk and compliance teams. By
+                submitting this form you agree to be contacted about our product
+                and services.
               </p>
 
               {/* ✅ ATTRACTIVE FOOTER ENHANCEMENT */}
@@ -375,7 +409,7 @@ const DemoPage = () => {
                     <span>GDPR</span>
                   </div>
                 </div>
-                
+
                 <div className="demo-stats-row">
                   <div className="demo-stat">
                     <div className="demo-stat-number">24/7</div>
