@@ -66,6 +66,7 @@ const RoleBasedRoute = ({ component: Component, allowedRoles, ...rest }) => {
     />
   );
 };
+
 const AppLayout = ({ children }) => {
   const location = useLocation();
 
@@ -86,11 +87,12 @@ function App() {
         {/* LOGIN ROUTE - STANDALONE LAYOUT (no hamburger menu) */}
         <Route exact path="/login" component={LoginPage} />
         <Route path="/demo" component={DemoPage} />
-        {/* FRAMEWORK ROUTES */}
+        
+        {/* FRAMEWORK ROUTES - PUBLIC */}
         <Route path="/iso-27001" component={ISO_27001} />
         <Route path="/iso-27701" component={ISO_27701} />
 
-        {/* TEMPLATE ROUTES */}
+        {/* TEMPLATE ROUTES - PROTECTED (logged-in only) */}
         <Route path="/policies" component={Policies} />
         <Route path="/procedures" component={Procedures} />
 
@@ -134,7 +136,7 @@ function App() {
                 ]}
               />
 
-              <ProtectedRoute
+              <Route
                 path="/risk-assessment/templates"
                 component={TemplatesPage}
               />

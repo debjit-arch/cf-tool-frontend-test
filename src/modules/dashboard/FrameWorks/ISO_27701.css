@@ -1,0 +1,33 @@
+/* Root wrapper for the ISO 27701 page */
+.iso27701-page-root {
+  min-height: 100vh;
+}
+
+/* Reuse ALL shared styles from ISO_27001.css */
+/* If ISO_27001.css is already global (with :root, .iso-header, .iso-section etc.),
+   you do NOT need to duplicate them here – you can just keep this file minimal
+   and rely on the same classes.
+
+   If you prefer a stand‑alone file, you may copy the entire ISO_27001.css content
+   into this file as well.
+*/
+
+/* Example: small visual tweak to differentiate 27701 hero tint */
+.iso27701-hero {
+  /* slightly more teal privacy accent on top of the existing gradient */
+  background: radial-gradient(
+      circle at top right,
+      rgba(45, 212, 191, 0.25),
+      transparent 55%
+    ),
+    radial-gradient(circle at top left, #4f46e5 0%, #1d1f3b 40%, #020617 100%);
+}
+
+.iso27701-sphere .iso-sphere-inner {
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(45, 212, 191, 0.9),
+    rgba(79, 70, 229, 0.55),
+    rgba(15, 23, 42, 1)
+  );
+}

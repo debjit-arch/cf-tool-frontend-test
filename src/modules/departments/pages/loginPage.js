@@ -216,10 +216,7 @@ const LoginPage = () => {
                 </div>
 
                 <div className="login-remember-row">
-                  <label className="login-remember">
-                    <input type="checkbox" disabled={loading} />
-                    <span>Remember me</span>
-                  </label>
+
                   <button
                     type="button"
                     className="login-forgot-btn"
