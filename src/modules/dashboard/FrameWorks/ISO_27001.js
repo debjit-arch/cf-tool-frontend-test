@@ -73,8 +73,6 @@
 //               </li>
 //             </ul>
 
-            
-
 //             <div className="iso-cta-buttons">
 //               <button
 //                 type="button"
@@ -676,12 +674,9 @@
 
 // export default ISO_27001;
 
-
-
 import React, { useState, useRef, useEffect } from "react";
 import { UserCircle2 } from "lucide-react";
 import "./ISO_27001.css";
-
 
 // HeaderDropdown must be defined before ISO_27001
 const HeaderDropdown = ({ label, options }) => {
@@ -701,8 +696,7 @@ const HeaderDropdown = ({ label, options }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -713,9 +707,7 @@ const HeaderDropdown = ({ label, options }) => {
         onClick={() => setOpen(!open)}
       >
         {label}
-        <span className={`header-dropdown-arrow ${open ? "open" : ""}`}>
-          ▼
-        </span>
+        <span className={`header-dropdown-arrow ${open ? "open" : ""}`}>▼</span>
       </button>
 
       {open && (
@@ -752,9 +744,15 @@ const ISO_27001 = () => {
         <div className="iso-header-content">
           <div className="iso-logo-section">
             <div className="iso-logo-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 2l7 3v6c0 5-3.5 9.1-7 11-3.5-1.9-7-6-7-11V5l7-3z" />
-              </svg>
+              <img
+                src="favicon.png"
+                alt="SafeSphere Logo"
+                style={{
+                  width: "70%", // Adjust this to control how much space the logo takes
+                  height: "70%",
+                  objectFit: "contain",
+                }}
+              />
             </div>
             <div>
               <p className="iso-logo-text">SafeSphere</p>
@@ -762,98 +760,100 @@ const ISO_27001 = () => {
             </div>
           </div>
 
-      <nav className="iso-header-nav">
-  <ul className="iso-nav-links">
-    <li>
-      <a href="/" className="iso-nav-link">
-        Home
-      </a>
-    </li>
-    <li>
-      <button
-        type="button"
-        className="iso-nav-link iso-nav-link-btn"
-        onClick={() => handleScrollTo("iso-overview")}
-      >
-        Overview
-      </button>
-    </li>
-    <li>
-      <button
-        type="button"
-        className="iso-nav-link iso-nav-link-btn"
-        onClick={() => handleScrollTo("iso-clauses")}
-      >
-        Clauses
-      </button>
-    </li>
-    <li>
-      <button
-        type="button"
-        className="iso-nav-link iso-nav-link-btn"
-        onClick={() => handleScrollTo("iso-annex-a")}
-      >
-        Annex A
-      </button>
-    </li>
-    <li>
-      <button
-        type="button"
-        className="iso-nav-link iso-nav-link-btn"
-        onClick={() => handleScrollTo("iso-benefits")}
-      >
-        Benefits
-      </button>
-    </li>
-  </ul>
+          <nav className="iso-header-nav">
+            <ul className="iso-nav-links">
+              <li>
+                <a href="/" className="iso-nav-link">
+                  Home
+                </a>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="iso-nav-link iso-nav-link-btn"
+                  onClick={() => handleScrollTo("iso-overview")}
+                >
+                  Overview
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="iso-nav-link iso-nav-link-btn"
+                  onClick={() => handleScrollTo("iso-clauses")}
+                >
+                  Clauses
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="iso-nav-link iso-nav-link-btn"
+                  onClick={() => handleScrollTo("iso-annex-a")}
+                >
+                  Annex A
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="iso-nav-link iso-nav-link-btn"
+                  onClick={() => handleScrollTo("iso-benefits")}
+                >
+                  Benefits
+                </button>
+              </li>
+            </ul>
 
-  <div className="dashboard-header-right">
-    {/* Frameworks dropdown */}
-    
+            <div className="dashboard-header-right">
+              {/* Frameworks dropdown */}
 
-    {/* Templates dropdown */}
-    
-  </div>
+              {/* Templates dropdown */}
+            </div>
 
-  {/* 🔥 FIXED: AUTO-DETECT LOGIN STATUS */}
-  {(() => {
-    // ✅ Define variables HERE (fixes ESLint)
-    const storedUser = JSON.parse(sessionStorage.getItem("user") || "null");
-    const isUserLoggedIn = !!storedUser;
-    
-    return isUserLoggedIn && storedUser ? (
-      // ✅ LOGGED IN: Show user card (NO Login button)
-      <div className="iso-user-card">
-        <UserCircle2 size={20} className="iso-user-icon" />
-        <div className="iso-user-info">
-          <span className="iso-user-name">{storedUser.name || "User"}</span>
-          <span className="iso-user-role">
-            {storedUser.department?.name || "Consultant"}
-          </span>
-        </div>
-      </div>
-    ) : (
-      // ✅ NOT LOGGED IN: Show Login button
-      <button
-        type="button"
-        className="iso-btn iso-btn-secondary"
-        onClick={() => goTo("/login")}
-      >
-        Login
-      </button>
-    );
-  })()}
+            {/* 🔥 FIXED: AUTO-DETECT LOGIN STATUS */}
+            {(() => {
+              // ✅ Define variables HERE (fixes ESLint)
+              const storedUser = JSON.parse(
+                sessionStorage.getItem("user") || "null"
+              );
+              const isUserLoggedIn = !!storedUser;
 
-  <div className="iso-cta-buttons">
-    <button
-      type="button"
-      className="iso-btn iso-btn-primary"
-      onClick={() => goTo("/demo")}
-    >
-      Get a demo
-    </button>
-  </div>
-</nav>
+              return isUserLoggedIn && storedUser ? (
+                // ✅ LOGGED IN: Show user card (NO Login button)
+                <div className="iso-user-card">
+                  <UserCircle2 size={20} className="iso-user-icon" />
+                  <div className="iso-user-info">
+                    <span className="iso-user-name">
+                      {storedUser.name || "User"}
+                    </span>
+                    <span className="iso-user-role">
+                      {storedUser.department?.name || "Consultant"}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                // ✅ NOT LOGGED IN: Show Login button
+                <button
+                  type="button"
+                  className="iso-btn iso-btn-secondary"
+                  onClick={() => goTo("/login")}
+                >
+                  Login
+                </button>
+              );
+            })()}
+
+            <div className="iso-cta-buttons">
+              <button
+                type="button"
+                className="iso-btn iso-btn-primary"
+                onClick={() => goTo("/demo")}
+              >
+                Get a demo
+              </button>
+            </div>
+          </nav>
         </div>
       </header>
 
@@ -895,79 +895,94 @@ const ISO_27001 = () => {
             </div>
           </div>
 
-        <div className="iso-hero-visual">
-  {/* 🔥 ISO 27001 COMPLIANCE GAUGE */}
-  <div className="compliance-gauge-container">
-    <div className="gauge-wrapper">
-      {/* Main Gauge */}
-      <div className="compliance-gauge">
-        <svg viewBox="0 0 300 300" className="gauge-svg">
-          <defs>
-            <linearGradient id="gaugeBg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="rgba(15, 23, 42, 0.3)"/>
-              <stop offset="100%" stopColor="rgba(79, 70, 229, 0.1)"/>
-            </linearGradient>
-            <linearGradient id="gaugeFill" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#4f46e5"/>
-              <stop offset="50%" stopColor="#6366f1"/>
-              <stop offset="100%" stopColor="#a5b4fc"/>
-            </linearGradient>
-          </defs>
-          
-          {/* Background Circle */}
-          <circle
-            cx="150"
-            cy="150"
-            r="130"
-            fill="none"
-            stroke="url(#gaugeBg)"
-            strokeWidth="20"
-            strokeLinecap="round"
-            className="gauge-bg"
-          />
-          
-          {/* Progress Circle */}
-          <circle
-            cx="150"
-            cy="150"
-            r="130"
-            fill="none"
-            stroke="url(#gaugeFill)"
-            strokeWidth="20"
-            strokeLinecap="round"
-            strokeDasharray="816 816"
-            className="gauge-progress"
-            style={{ strokeDashoffset: 204 }} // 75% complete
-          />
-        </svg>
-        
-        {/* Center Content */}
-        <div className="gauge-center">
-          <div className="compliance-badge">ISO 27001</div>
-          <div className="compliance-value">75%</div>
-          <div className="compliance-label">Compliance Achieved</div>
+          <div className="iso-hero-visual">
+            {/* 🔥 ISO 27001 COMPLIANCE GAUGE */}
+            <div className="compliance-gauge-container">
+              <div className="gauge-wrapper">
+                {/* Main Gauge */}
+                <div className="compliance-gauge">
+                  <svg viewBox="0 0 300 300" className="gauge-svg">
+                    <defs>
+                      <linearGradient
+                        id="gaugeBg"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="rgba(15, 23, 42, 0.3)" />
+                        <stop
+                          offset="100%"
+                          stopColor="rgba(79, 70, 229, 0.1)"
+                        />
+                      </linearGradient>
+                      <linearGradient
+                        id="gaugeFill"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#4f46e5" />
+                        <stop offset="50%" stopColor="#6366f1" />
+                        <stop offset="100%" stopColor="#a5b4fc" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Background Circle */}
+                    <circle
+                      cx="150"
+                      cy="150"
+                      r="130"
+                      fill="none"
+                      stroke="url(#gaugeBg)"
+                      strokeWidth="20"
+                      strokeLinecap="round"
+                      className="gauge-bg"
+                    />
+
+                    {/* Progress Circle */}
+                    <circle
+                      cx="150"
+                      cy="150"
+                      r="130"
+                      fill="none"
+                      stroke="url(#gaugeFill)"
+                      strokeWidth="20"
+                      strokeLinecap="round"
+                      strokeDasharray="816 816"
+                      className="gauge-progress"
+                      style={{ strokeDashoffset: 204 }} // 75% complete
+                    />
+                  </svg>
+
+                  {/* Center Content */}
+                  <div className="gauge-center">
+                    <div className="compliance-badge">ISO 27001</div>
+                    <div className="compliance-value">75%</div>
+                    <div className="compliance-label">Compliance Achieved</div>
+                  </div>
+                </div>
+
+                {/* Live Stats */}
+                <div className="live-stats">
+                  <div className="stat-item">
+                    <div className="stat-number">93</div>
+                    <div className="stat-label">Controls</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number">4</div>
+                    <div className="stat-label">Themes</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number">10</div>
+                    <div className="stat-label">Clauses</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      {/* Live Stats */}
-      <div className="live-stats">
-        <div className="stat-item">
-          <div className="stat-number">93</div>
-          <div className="stat-label">Controls</div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-number">4</div>
-          <div className="stat-label">Themes</div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-number">10</div>
-          <div className="stat-label">Clauses</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
       </section>
 
       {/* OVERVIEW SECTION */}
@@ -975,13 +990,11 @@ const ISO_27001 = () => {
         <div className="iso-section-header">
           <h2>What is ISO 27001?</h2>
           <p>
-            ISO/IEC 27001 is the leading international standard for establishing,
-            implementing, maintaining and continually improving an Information
-            Security Management System (ISMS).
+            ISO/IEC 27001 is the leading international standard for
+            establishing, implementing, maintaining and continually improving an
+            Information Security Management System (ISMS).
           </p>
         </div>
-
-        
 
         <div className="iso-overview-grid">
           <div className="iso-overview-card">
@@ -1130,8 +1143,8 @@ const ISO_27001 = () => {
             <h3>From 14 domains to 4 themes</h3>
             <p>
               ISO/IEC 27001:2022 consolidates the original 114 controls into 93
-              updated controls grouped under organizational, people,
-              physical and technological themes.
+              updated controls grouped under organizational, people, physical
+              and technological themes.
             </p>
           </div>
         </div>
@@ -1276,7 +1289,6 @@ const ISO_27001 = () => {
         </div>
       </section>
 
-      
       {/* CTA SECTION */}
       <section className="iso-section">
         <div className="iso-cta-section">
@@ -1370,7 +1382,3 @@ const ISO_27001 = () => {
 };
 
 export default ISO_27001;
-
-
-
-

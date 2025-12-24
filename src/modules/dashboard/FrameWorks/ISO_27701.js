@@ -18,9 +18,15 @@ const ISO_27701 = () => {
         <div className="iso-header-content">
           <div className="iso-logo-section">
             <div className="iso-logo-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 2l7 3v6c0 5-3.5 9.1-7 11-3.5-1.9-7-6-7-11V5l7-3z" />
-              </svg>
+              <img
+                src="favicon.png"
+                alt="SafeSphere Logo"
+                style={{
+                  width: "70%", // Adjust this to control how much space the logo takes
+                  height: "70%",
+                  objectFit: "contain",
+                }}
+              />
             </div>
             <div>
               <p className="iso-logo-text">SafeSphere</p>
@@ -74,7 +80,6 @@ const ISO_27701 = () => {
             </ul>
 
             <div className="iso-cta-buttons">
-              
               <button
                 type="button"
                 className="iso-btn iso-btn-primary"
@@ -199,8 +204,13 @@ const ISO_27701 = () => {
                 are in scope for your PIMS on top of the ISMS scope.{" "}
               </p>
               <ul>
-                <li>Identify PII types, data subjects and processing purposes.</li>
-                <li>Map PII flows between controllers, processors and sub‑processors.</li>
+                <li>
+                  Identify PII types, data subjects and processing purposes.
+                </li>
+                <li>
+                  Map PII flows between controllers, processors and
+                  sub‑processors.
+                </li>
                 <li>
                   Align PIMS boundaries with your legal and contractual
                   obligations.
@@ -209,7 +219,9 @@ const ISO_27701 = () => {
             </div>
 
             <div className="iso-clause-card">
-              <span className="iso-clause-number">Roles &amp; responsibilities</span>
+              <span className="iso-clause-number">
+                Roles &amp; responsibilities
+              </span>
               <h3>Controller and processor focus</h3>
               <p>
                 Clarify whether you act as a PII controller, processor, or both
@@ -244,8 +256,8 @@ const ISO_27701 = () => {
                   integrity or availability of PII.
                 </li>
                 <li>
-                  Prioritize controls that mitigate risks to individuals’
-                  rights and freedoms.
+                  Prioritize controls that mitigate risks to individuals’ rights
+                  and freedoms.
                 </li>
                 <li>
                   Link privacy risks to DPIAs or similar assessments where
@@ -294,9 +306,7 @@ const ISO_27701 = () => {
                 Handle access, rectification, deletion and portability requests
                 within defined timelines.
               </li>
-              <li>
-                Verify identity and record decisions for each request.
-              </li>
+              <li>Verify identity and record decisions for each request.</li>
               <li>
                 Communicate outcomes and reasons clearly to data subjects.
               </li>
@@ -304,7 +314,9 @@ const ISO_27701 = () => {
           </div>
 
           <div className="iso-domain-card">
-            <h4 className="iso-domain-title">Privacy by design &amp; default</h4>
+            <h4 className="iso-domain-title">
+              Privacy by design &amp; default
+            </h4>
             <p className="iso-domain-desc">
               Integrate privacy considerations into products, services and
               changes from the start.{" "}
@@ -334,8 +346,8 @@ const ISO_27701 = () => {
               <li>Ensure contracts clearly define processing instructions.</li>
               <li>Support audits and information requests from controllers.</li>
               <li>
-                Notify controllers promptly about breaches or incidents involving
-                PII.
+                Notify controllers promptly about breaches or incidents
+                involving PII.
               </li>
             </ul>
           </div>
@@ -441,9 +453,9 @@ const ISO_27701 = () => {
         <div className="iso-section-header">
           <h2>Your ISO 27701 rollout plan</h2>
           <p>
-            SafeSphere layers PIMS capabilities on top of your existing ISO 27001
-            program so you can move from security‑only to security‑and‑privacy
-            without starting from scratch.{" "}
+            SafeSphere layers PIMS capabilities on top of your existing ISO
+            27001 program so you can move from security‑only to
+            security‑and‑privacy without starting from scratch.{" "}
           </p>
         </div>
 
@@ -641,4 +653,3 @@ const ISO_27701 = () => {
 };
 
 export default ISO_27701;
-       
