@@ -187,16 +187,9 @@ const LoginPage = () => {
                 </div>
 
                 <datalist id="region-list">
-                  <option value="Asia" />
-                  <option value="Africa" />
-                  <option value="Europe" />
-                  <option value="North America" />
-                  <option value="South America" />
-                  <option value="Australia" />
-                  <option value="Antarctica" />
-                  <option value="Middle East" />
-                  <option value="Central America" />
-                  <option value="Caribbean" />
+                  <option value="India" />
+                  <option value="EU" />
+                  <option value="US" />
                 </datalist>
 
                 <div className="login-field-group">
