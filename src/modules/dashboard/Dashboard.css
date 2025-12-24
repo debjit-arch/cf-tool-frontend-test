@@ -931,6 +931,14 @@ html {
   width: 280px;
   height: 280px;
   position: relative;
+  
+  /* MOVE UP AND LEFT/RIGHT */
+  /* First value is Left/Right (negative is Left, positive is Right) */
+  /* Second value is Up/Down (negative is Up) */
+  transform: translate(400px, -200px); 
+  
+  /* Ensure it doesn't get cut off if it moves outside its grid cell */
+  z-index: 10; 
 }
 
 .hero-sphere-inner {
@@ -2048,8 +2056,14 @@ html {
   }
 
   .hero-sphere {
-    width: 200px;
-    height: 200px;
+    /* Reset any desktop 'left' or 'transform' offsets for mobile */
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0) scale(0.9); /* Scale down slightly if needed */
+    margin: 0 auto;
+    width: 280px;
+    height: 280px;
   }
 
   .corecards-section {
