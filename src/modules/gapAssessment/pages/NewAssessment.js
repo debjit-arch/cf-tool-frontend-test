@@ -549,7 +549,7 @@ const NewAssessment = () => {
                                 }
                                 className="w-full border rounded text-[11px] sm:text-xs"
                               >
-                                <option value="">Doc Score</option>
+                                <option value="">Not Applicable</option>
                                 <option value="0">0 - Non Compliant</option>
                                 <option value="1">1 - Partial</option>
                                 <option value="2">2 - Compliant</option>
@@ -568,7 +568,7 @@ const NewAssessment = () => {
                                 }
                                 className="w-full border rounded text-[11px] sm:text-xs"
                               >
-                                <option value="">Practice Score</option>
+                                <option value="">Not Applicable</option>
                                 <option value="0">0 - Non Compliant</option>
                                 <option value="1">1 - Partial</option>
                                 <option value="2">2 - Compliant</option>
