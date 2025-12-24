@@ -217,17 +217,41 @@ const DemoPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Basic ${basicAuth}`,
+            Authorization: `Basic ${basicAuth}`,
           },
           body: JSON.stringify({
             receiver: form.email,
             subject: "Thank You for choosing SafeSphere",
-            body: `Hi ${form.organization},\n\nThank You for choosing SafeSphere an individual from sales team will contact you please send an email to info@safesphere.com attaching your work contact number`,
+            body: `Hi ${form.organization},
+            \n\nThank You for choosing SafeSphere an individual from sales team will contact you please drop an email to info@safesphere.com attaching your work contact number. 
+            \n\nThanks & Regards,
+            \nSafesphere`,
           }),
         }
       );
-
+      const reply = await fetch(
+        "https://safesphere.duckdns.org/email-service/send-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${basicAuth}`,
+          },
+          body: JSON.stringify({
+            receiver: "debjit@consultantsfactory.com",
+            subject: "Demo Request for SafeSphere",
+            body: `Hi Team,
+            \n\nSomeone just requested a demo. To get hold of new lead, contact ${form.email}.
+            \nThe name of the organization is ${form.organization} and want to provide access to ${form.employees} employees.
+            \n\nThanks & Regards,
+            \nSafesphere`,
+          }),
+        }
+      );
       if (!response.ok) {
+        throw new Error("Email service failed");
+      }
+      if (!reply.ok) {
         throw new Error("Email service failed");
       }
 
