@@ -217,7 +217,7 @@ const DemoPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Basic ${basicAuth}`,
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify({
             receiver: form.email,
@@ -235,7 +235,7 @@ const DemoPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Basic ${basicAuth}`,
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify({
             receiver: "debjit@consultantsfactory.com",
