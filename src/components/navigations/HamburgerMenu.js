@@ -35,11 +35,11 @@ const HamburgerMenu = () => {
         <button
           style={{
             position: "fixed",
-            top: 20,
-            left: 20,
+            top: 10,
+            left: 10,
             zIndex: 9999,
-            width: 50,
-            height: 50,
+            width: 40,
+            height: 40,
             backgroundColor: "#007bff",
             border: "none",
             borderRadius: 8,
