@@ -915,6 +915,11 @@
 
 // export default Dashboard;
 
+
+
+
+
+
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import "./Dashboard.css";
@@ -1037,39 +1042,50 @@ const CoreCards = ({ isLoggedIn, history }) => {
   const cards = [
     {
       title: "Risk Assessment",
-      description:
-        "Continuously score, prioritize, and track risks across assets, vendors, and business units.",
+      description: "Continuously score, prioritize, and track risks across assets, vendors, and business units.",
       icon: ShieldCheck,
       size: 26,
+      route: isLoggedIn ? "/risk-assessment" : "/login"
     },
     {
       title: "Documentation Management",
-      description:
-        "Centralize policies, procedures, and evidence with version control and review workflows.",
+      description: "Centralize policies, procedures, and evidence with version control and review workflows.",
       icon: FileText,
       size: 26,
+      route: isLoggedIn ? "/documentation" : "/login"
     },
     {
       title: "Gap Assessment",
-      description:
-        "Map ISO and NIST controls, highlight gaps, and generate implementation roadmaps.",
+      description: "Map ISO and NIST controls, highlight gaps, and generate implementation roadmaps.",
       icon: Activity,
       size: 26,
+      route: isLoggedIn ? "/gap-assessment" : "/login"
     },
   ];
+
+  const handleCardClick = (route) => {
+    history.push(route);
+  };
 
   return (
     <section className="corecards-section">
       <div className="corecards-header">
         <h2>Core Intelligence Pillars</h2>
-        <p>
-          Everything starts with understanding risk, documenting controls, and
-          closing compliance gaps. SafeSphere unifies all three.
-        </p>
+        <p>Everything starts with understanding risk, documenting controls, and closing compliance gaps. SafeSphere unifies all three.</p>
       </div>
       <div className="corecards-grid">
         {cards.map((card, idx) => (
-          <div key={card.title} className={`corecard corecard-${idx}`}>
+          <div 
+            key={card.title} 
+            className={`corecard corecard-${idx}`}
+            role="button"
+            tabIndex={0}
+            onClick={() => handleCardClick(card.route)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") handleCardClick(card.route);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="corecard-icon">
               <card.icon size={card.size} />
             </div>
@@ -1078,23 +1094,6 @@ const CoreCards = ({ isLoggedIn, history }) => {
           </div>
         ))}
       </div>
-      {!isLoggedIn && (
-        <div style={{ textAlign: "center", marginTop: "40px" }}>
-          <button
-            className="hero-cta-secondary"
-            onClick={() => history.push("/demo")}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "12px 24px",
-            }}
-          >
-            <LogIn size={16} />
-            Get a Demo
-          </button>
-        </div>
-      )}
     </section>
   );
 };
@@ -2160,7 +2159,7 @@ const Dashboard = () => {
         <WhySafeSphere isLoggedIn={false} history={history} />
         <ExtraFeaturesLongScroll isLoggedIn={false} history={history} />
 
-        <section className="dashboard-guest-modules">
+        {/* <section className="dashboard-guest-modules">
           <h3 className="dashboard-section-title">Explore Key Modules</h3>
           <div className="dashboard-tiles-grid">
             {[
@@ -2216,7 +2215,62 @@ const Dashboard = () => {
               )
             )}
           </div>
-        </section>
+        </section> */}
+<section className="dashboard-guest-modules">
+  <h3 className="dashboard-section-title">Explore Key Modules</h3>
+  <div className="dashboard-tiles-grid">
+    {[
+      {
+        label: "Risk Management",
+        description:
+          "Identify, analyze, and mitigate organizational risks before they impact your business.",
+        icon: ShieldCheck,
+        color: "from-blue-500 to-blue-600",
+        bgColor: "bg-blue-50",
+        iconColor: "text-blue-600",
+        route: "/risk-assessment",
+      },
+      {
+        label: "Documentation",
+        description:
+          "Maintain audit-ready documentation and ensure compliance with industry standards.",
+        icon: FileText,
+        color: "from-purple-500 to-purple-600",
+        bgColor: "bg-purple-50",
+        iconColor: "text-purple-600",
+        route: "/documentation",
+      },
+      {
+        label: "Gap Assessment",
+        description:
+          "Evaluate compliance gaps and get actionable insights for your organization.",
+        icon: Activity,
+        color: "from-cyan-500 to-cyan-600",
+        bgColor: "bg-cyan-50",
+        iconColor: "text-cyan-600",
+        route: "/gap-assessment",
+      },
+    ].map(({ label, description, icon: Icon, color, bgColor, iconColor, route }) => (
+      <div
+        key={label}
+        className="dashboard-tile"
+        role="button"
+        tabIndex={0}
+        onClick={() => history.push("/login")}
+        onKeyPress={(e) => {
+          if (e.key === "Enter") history.push("/login");
+        }}
+      >
+        <div className={`dashboard-tile-icon-wrapper ${bgColor}`}>
+          <Icon className={`w-12 h-12 ${iconColor}`} />
+        </div>
+        <h3 className="dashboard-tile-title">{label}</h3>
+        <p className="dashboard-tile-description">{description}</p>
+        <div className={`dashboard-tile-accent bg-gradient-to-r ${color}`} />
+      </div>
+    ))}
+  </div>
+</section>
 
         <section className="dashboard-features-section">
           <div className="dashboard-features-header">

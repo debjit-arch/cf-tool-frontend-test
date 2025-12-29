@@ -1597,11 +1597,7 @@ html {
 /* ============================================
    ORIGINAL DASHBOARD SECTIONS
    ============================================ */
-.dashboard-main {
-  background: var(--color-background);
-  min-height: 100vh;
-  padding-bottom: 40px;
-}
+s
 
 .dashboard-section-title {
   font-size: var(--font-size-3xl);
@@ -1864,7 +1860,7 @@ html {
 
   .hero-visual {
     order: 2;
-    height: 300px;
+    height: 2600px;
   }
 
   .hero-title {
@@ -2029,7 +2025,7 @@ html {
   }
 
   .hero-section {
-    /* padding: 48px var(--space-12) 40px; */
+    padding: 28px var(--space-12) 40px;
   }
 
   .hero-title {
@@ -2042,6 +2038,7 @@ html {
 
   .hero-cta-row {
     flex-direction: column;
+    
   }
 
   .hero-cta-primary,
@@ -2052,7 +2049,7 @@ html {
   }
 
   .hero-visual {
-    height: 200px;
+    height: 400px;
   }
 
   .hero-sphere {
@@ -5697,3 +5694,11 @@ html {
     gap: 0.5rem;
   }
 }
+
+.hero-visual {
+  order: 2;
+  height: 80px;
+}
+
+
+
