@@ -249,40 +249,80 @@ const RiskDetailsForm = ({
       },
     });
   };
+  useEffect(() => {
+    if (isEditing && formData.threat) {
+      // --- Sync Threat ---
+      const isStandardThreat = Object.keys(threatVulnerabilityMapping).includes(
+        formData.threat
+      );
 
+      if (isStandardThreat) {
+        setSelectedThreat(formData.threat);
+        setIsCustomThreat(false);
+        setCustomThreatInput("");
+      } else {
+        setIsCustomThreat(true);
+        setSelectedThreat("");
+        setCustomThreatInput(formData.threat);
+      }
+
+      // --- Sync Vulnerabilities ---
+      // Ensure we handle both string (from DB) and array (from local state)
+      const rawVuls = Array.isArray(formData.vulnerability)
+        ? formData.vulnerability
+        : formData.vulnerability
+        ? formData.vulnerability.split(",").map((s) => s.trim())
+        : [];
+
+      if (rawVuls.length > 0) {
+        const standardItems = rawVuls.filter((v) =>
+          allVulnerabilities.includes(v)
+        );
+        const customItems = rawVuls.filter(
+          (v) => !allVulnerabilities.includes(v)
+        );
+
+        setSelectedVulnerabilities(standardItems);
+
+        if (customItems.length > 0) {
+          setShowCustomVulInput(true);
+          setCustomVulnerability(customItems.join(", "));
+        } else {
+          setShowCustomVulInput(false);
+          setCustomVulnerability("");
+        }
+      }
+    }
+  }, [isEditing, formData.threat]); // Added formData.threat to dependency to ensure it fires when data arrives
   // Auto-fill Risk Description - UPDATED with better formatting
   useEffect(() => {
-    let vulArray = [...selectedVulnerabilities];
+    // Determine actual threat string
+    let threatValue = isCustomThreat ? customThreatInput : selectedThreat;
 
+    // Create the combined vulnerability array
+    let vulArray = [...selectedVulnerabilities];
     if (showCustomVulInput && customVulnerability) {
-      const customVulArray = customVulnerability
+      const customParts = customVulnerability
         .split(",")
         .map((v) => v.trim())
         .filter((v) => v);
-      vulArray = [...vulArray, ...customVulArray];
+      vulArray = [...vulArray, ...customParts];
     }
 
-    let threatValue = isCustomThreat ? customThreatInput : selectedThreat;
-    let desc = "";
-
-    if (threatValue) {
-      // Use formatted list with proper English grammar
+    // ONLY update if we actually have a selection (prevents wiping data on mount)
+    if (threatValue || vulArray.length > 0) {
       const vulnerabilitiesFormatted = formatListWithAnd(vulArray);
-      desc = `Risk of loss of information due to ${threatValue}${
+      const desc = `Risk of loss of information due to ${threatValue}${
         vulnerabilitiesFormatted
           ? " because of " + vulnerabilitiesFormatted
           : ""
       }`;
-      handleInputChange({
-        target: { name: "riskDescription", value: desc },
-      });
-    }
 
-    // Always update threat and vulnerability in formData
-    handleInputChange({ target: { name: "threat", value: threatValue } });
-    handleInputChange({
-      target: { name: "vulnerability", value: vulArray },
-    });
+      // Update parent formData
+      handleInputChange({ target: { name: "riskDescription", value: desc } });
+      handleInputChange({ target: { name: "threat", value: threatValue } });
+      handleInputChange({ target: { name: "vulnerability", value: vulArray } });
+    }
   }, [
     selectedThreat,
     customThreatInput,
@@ -765,6 +805,7 @@ const RiskDetailsForm = ({
             <div>
               <label style={selectLabelStyle}>Vulnerabilities</label>
               <Select
+                isMulti
                 value={[
                   ...selectedVulnerabilities.map((v) => ({
                     value: v,
@@ -777,7 +818,6 @@ const RiskDetailsForm = ({
                 onChange={handleVulnerabilityChange}
                 options={vulOptionsArr}
                 placeholder="Select Vulnerabilities"
-                isMulti
                 isClearable
                 styles={selectControlStyle}
                 className="vulnerability-select"
@@ -837,7 +877,7 @@ const RiskDetailsForm = ({
             </span>
           </div>
 
-          <div style={calculatedItemStyle}className="risk-score-field">
+          <div style={calculatedItemStyle} className="risk-score-field">
             <label style={calculatedLabelStyle}>Risk Score</label>
             <span style={calculatedValueStyle}>{formData.riskScore || 0}</span>
           </div>
