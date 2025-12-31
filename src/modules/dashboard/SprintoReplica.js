@@ -169,7 +169,7 @@ const HeaderRow = () => (
             fontSize: 20
           }}
         >
-          SafeSphere
+          CalVant
         </div>
         <div style={{ fontSize: 14, color: COLORS.textMuted }}>
           Modules mapped to ISO 27001 criteria
@@ -486,7 +486,7 @@ const CenterMonitor = ({ active, activeIndex, allComplete }) => {
               marginBottom: 4
             }}
           >
-            SAFESPHERE
+            CALVANT
           </div>
           <div
             style={{
@@ -953,7 +953,7 @@ const SprintoConnectionsMobile = () => {
                 fontSize: 18
               }}
             >
-              SafeSphere
+              CalVant
             </div>
             <div style={{ fontSize: 12, color: MOBILE_COLORS.textMuted }}>
               Entities mapped to ISO_27001
@@ -1133,7 +1133,7 @@ const SprintoConnectionsMobile = () => {
                   marginBottom: 2
                 }}
               >
-                SAFESPHERE
+                CALVANT
               </div>
               <div
                 ref={statusRef}

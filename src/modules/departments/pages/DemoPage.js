@@ -1,176 +1,3 @@
-// import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
-// import "./DemoPage.css";
-
-// const DemoPage = () => {
-//   const history = useHistory();
-//   const [form, setForm] = useState({
-//     email: "",
-//     organization: "",
-//     employees: "",
-//   });
-//   const [submitting, setSubmitting] = useState(false);
-//   const [error, setError] = useState("");
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setForm((prev) => ({ ...prev, [name]: value }));
-//     setError("");
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     if (!form.email || !form.organization || !form.employees) {
-//       setError("Please fill all required fields.");
-//       return;
-//     }
-
-//     // optional: simple email check
-//     if (!form.email.includes("@")) {
-//       setError("Please enter a valid work email.");
-//       return;
-//     }
-
-//     setSubmitting(true);
-//     try {
-//       // TODO: call your backend demo-request API
-//       await new Promise((resolve) => setTimeout(resolve, 800));
-
-//       // after submit you can redirect or show a message
-//       alert("Thanks! Our team will contact you shortly.");
-//       history.push("/login");
-//     } catch (err) {
-//       setError("Something went wrong. Please try again.");
-//     } finally {
-//       setSubmitting(false);
-//     }
-//   };
-
-//   return (
-//     <div className="demo-page">
-//       <header className="demo-header">
-//         <div className="demo-logo">SafeSphere</div>
-//         <nav className="demo-nav">
-//           <button onClick={() => history.push("/")} className="demo-nav-link">
-//             Home
-//           </button>
-//           <button onClick={() => history.push("/login")} className="demo-nav-link">
-//             Login
-//           </button>
-//         </nav>
-//       </header>
-
-//       <main className="demo-main">
-//         <section className="demo-left">
-//           <div className="demo-left-inner">
-//             <div className="demo-pulse-icon" />
-//             <h1 className="demo-title">
-//               Schedule
-//               <br />
-//               a Live Demo
-//             </h1>
-//             <p className="demo-subtitle">
-//               See how SafeSphere unifies risk, documentation, and compliance
-//               into a single 3D command center for your security team.
-//             </p>
-
-//             <div className="demo-highlights">
-//               <span>• Guided walkthrough of your use case</span>
-//               <span>• Real-time dashboards & risk scoring</span>
-//               <span>• ISO 27001, SOC 2, and NIST mapping</span>
-//             </div>
-
-//             <div className="demo-orbit">
-//               <div className="demo-orbit-sphere" />
-//               <div className="demo-orbit-ring" />
-//             </div>
-//           </div>
-//         </section>
-
-//         <section className="demo-right">
-//           <div className="demo-form-card">
-//             <h2 className="demo-form-title">Tell us about your team</h2>
-//             <p className="demo-form-subtitle">
-//               Share a few details and we will match you with a product expert.
-//             </p>
-
-//             {error && <div className="demo-error">{error}</div>}
-
-//             <form onSubmit={handleSubmit} className="demo-form">
-//               <div className="demo-field-group">
-//                 <label className="demo-label">
-//                   Work email <span>*</span>
-//                 </label>
-//                 <input
-//                   type="email"
-//                   name="email"
-//                   className="demo-input"
-//                   placeholder="you@company.com"
-//                   value={form.email}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="demo-field-group">
-//                 <label className="demo-label">
-//                   Organization <span>*</span>
-//                 </label>
-//                 <input
-//                   type="text"
-//                   name="organization"
-//                   className="demo-input"
-//                   placeholder="Company or institution"
-//                   value={form.organization}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="demo-field-group">
-//                 <label className="demo-label">
-//                   Number of employees <span>*</span>
-//                 </label>
-//                 <select
-//                   name="employees"
-//                   className="demo-input demo-select"
-//                   value={form.employees}
-//                   onChange={handleChange}
-//                   required
-//                 >
-//                   <option value="">Select a range</option>
-//                   <option value="1-50">1 – 50</option>
-//                   <option value="51-200">51 – 200</option>
-//                   <option value="201-500">201 – 500</option>
-//                   <option value="501-1000">501 – 1,000</option>
-//                   <option value="1000+">1,000+</option>
-//                 </select>
-//               </div>
-
-//               <button
-//                 type="submit"
-//                 className="demo-submit"
-//                 disabled={submitting}
-//               >
-//                 {submitting ? "Submitting..." : "Request Demo"}
-//               </button>
-
-//               <p className="demo-legal">
-//                 SafeSphere is built for security, risk and compliance teams.
-//                 By submitting this form you agree to be contacted about our
-//                 product and services.
-//               </p>
-//             </form>
-//           </div>
-//         </section>
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default DemoPage;
-
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./DemoPage.css";
@@ -221,11 +48,11 @@ const DemoPage = () => {
           },
           body: JSON.stringify({
             receiver: form.email,
-            subject: "Thank You for choosing SafeSphere",
+            subject: "Thank You for choosing CalVant",
             body: `Hi ${form.organization},
-            \n\nThank You for choosing SafeSphere an individual from sales team will contact you please drop an email to info@safesphere.com attaching your work contact number. 
+            \n\nThank You for choosing CalVant an individual from sales team will contact you please drop an email to info@calvant.com attaching your work contact number. 
             \n\nThanks & Regards,
-            \nSafesphere`,
+            \nCalVant`,
           }),
         }
       );
@@ -239,12 +66,12 @@ const DemoPage = () => {
           },
           body: JSON.stringify({
             receiver: "debjit@consultantsfactory.com",
-            subject: "Demo Request for SafeSphere",
+            subject: "Demo Request for CalVant",
             body: `Hi Team,
             \n\nSomeone just requested a demo. To get hold of new lead, contact ${form.email}.
             \nThe name of the organization is ${form.organization} and want to provide access to ${form.employees} employees.
             \n\nThanks & Regards,
-            \nSafesphere`,
+            \nCalVant`,
           }),
         }
       );
@@ -269,7 +96,7 @@ const DemoPage = () => {
   return (
     <div className="demo-page">
       <header className="demo-header">
-        <div className="demo-logo">SafeSphere</div>
+        <div className="demo-logo">CalVant</div>
         <nav className="demo-nav">
           <button onClick={() => history.push("/")} className="demo-nav-link">
             Home
@@ -294,7 +121,7 @@ const DemoPage = () => {
               <br />a Live Demo
             </h1>
             <p className="demo-subtitle">
-              See how SafeSphere unifies risk, documentation, and compliance
+              See how CalVant unifies risk, documentation, and compliance
               into a single 3D command center for your security team.
             </p>
 
@@ -408,7 +235,7 @@ const DemoPage = () => {
               </button>
 
               <p className="demo-legal">
-                SafeSphere is built for security, risk and compliance teams. By
+                CalVant is built for security, risk and compliance teams. By
                 submitting this form you agree to be contacted about our product
                 and services.
               </p>

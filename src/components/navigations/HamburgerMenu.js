@@ -101,7 +101,7 @@ const HamburgerMenu = () => {
             alignItems: "center",
           }}
         >
-          <h3 style={{ margin: 0, fontSize: 18 }}>SafeSphere</h3>
+          <h3 style={{ margin: 0, fontSize: 18 }}>CalVant</h3>
           <button
             style={{
               background: "none",

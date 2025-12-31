@@ -127,7 +127,7 @@ const LoginPage = () => {
     <div className="login-page">
       {/* PERFECT HEADER - EXACT DemoPage style */}
       <header className="login-header">
-        <div className="login-logo">SafeSphere</div>
+        <div className="login-logo">CalVant</div>
         <nav className="login-nav">
           <button onClick={() => history.push("/")} className="login-nav-link">
             Home
@@ -147,7 +147,7 @@ const LoginPage = () => {
             <div className="login-content">
               <h1 className="login-title">Welcome back!</h1>
               <p className="login-subtitle">
-                Sign in with your work email to access SafeSphere risk, compliance,
+                Sign in with your work email to access CalVant risk, compliance,
                 and documentation tools.
               </p>
 
@@ -261,13 +261,13 @@ const LoginPage = () => {
 
               {/* ✅ YOUR ORIGINAL SIGNUP PROMPT */}
               <div className="login-signup-row">
-                <span>New to SafeSphere?</span>
+                <span>New to CalVant?</span>
                 <button 
                   type="button" 
                   className="login-signup-btn"
                   onClick={() =>   openInfoModal(
       "Account Creation Disabled",
-      "Account creation is managed by your organization. Please contact your system administrator or IT team to get access to SafeSphere."
+      "Account creation is managed by your organization. Please contact your system administrator or IT team to get access to CalVant."
     )
   }
 >
@@ -286,7 +286,7 @@ const LoginPage = () => {
 
               {/* ✅ YOUR ORIGINAL COPYRIGHT */}
               <div className="login-footer-copy">
-                © SafeSphere 2025. All Rights Reserved.
+                © CalVant 2025. All Rights Reserved.
               </div>
             </div>
           </div>
@@ -304,7 +304,7 @@ const LoginPage = () => {
             <div className="login-badge">#1 Compliance Automation Tool</div>
             <h2 className="login-right-title">Stay one step ahead of risk.</h2>
             <p className="login-right-text">
-              SafeSphere helps security and compliance teams monitor risk in
+              CalVant helps security and compliance teams monitor risk in
               real-time, automate checks, and keep every audit-ready report in
               one secure place.
             </p>
